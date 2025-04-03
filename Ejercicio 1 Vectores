@@ -1,0 +1,51 @@
+#include <iostream>
+#include <stdexcept>
+#include "vector.h" // Usando tu propia librería Vector<T>
+using namespace std;
+
+class VerificadorSimetria {
+  public:
+    
+    static bool esSimetrico(Vector<int> &v)
+    {
+        int n = v.getSize();
+        for (int i = 0; i < n / 2; i++)
+        {
+            if (v.at(i) != v.at(n - 1 - i))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+int main()
+{
+    Vector<int> miVector;
+    int n, valor;
+
+    cout << "Ingrese la cantidad de elementos: ";
+    cin >> n;
+
+    cout << "Ingrese los elementos del vector: ";
+    for (int i = 0; i < n; i++)
+    {
+        cin >> valor;
+        miVector.pushBack(valor);
+    }
+
+    cout << "El vector ingresado es: ";
+    miVector.print();
+
+    if (VerificadorSimetria::esSimetrico(miVector))
+    {
+        cout << "El vector es simétrico." << endl;
+    }
+    else
+    {
+        cout << "El vector NO es simétrico." << endl;
+    }
+
+    return 0;
+}
