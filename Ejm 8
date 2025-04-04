@@ -1,0 +1,38 @@
+#include <iostream>
+#include "Matrix.h"
+using namespace std;
+
+class MatrizOperaciones {
+  public:
+    static int sumaImpares(Matrix<int, 3, 3> &m)
+    {
+        int suma = 0;
+        for (int i = 0; i < m.numRows(); i++)
+        {
+            for (int j = 0; j < m.numCols(); j++)
+            {
+                if (m.at(i, j) % 2 != 0)
+                {
+                    suma += m.at(i, j);
+                }
+            }
+        }
+        return suma;
+    }
+};
+
+int main()
+{
+    Matrix<int, 3, 3> matriz;
+    int valor;
+    for (int i = 0; i < matriz.numRows(); i++)
+    {
+        for (int j = 0; j < matriz.numCols(); j++)
+        {
+            cin >> valor;
+            matriz.set(i, j, valor);
+        }
+    }
+    cout << MatrizOperaciones::sumaImpares(matriz) << endl;
+    return 0;
+}
