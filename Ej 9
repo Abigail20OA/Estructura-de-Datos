@@ -1,0 +1,39 @@
+#include <iostream>
+#include "matrix.h"
+#include "vector.h"
+using namespace std;
+
+class MatrizOperaciones {
+  public:
+    static Vector<int> sumaFilas(Matrix<int, 3, 3> &m)
+    {
+        Vector<int> resultado;
+        for (int i = 0; i < m.numRows(); i++)
+        {
+            int suma = 0;
+            for (int j = 0; j < m.numCols(); j++)
+            {
+                suma += m.at(i, j);
+            }
+            resultado.pushBack(suma);
+        }
+        return resultado;
+    }
+};
+
+int main()
+{
+    Matrix<int, 3, 3> matriz;
+    int valor;
+    for (int i = 0; i < matriz.numRows(); i++)
+    {
+        for (int j = 0; j < matriz.numCols(); j++)
+        {
+            cin >> valor;
+            matriz.set(i, j, valor);
+        }
+    }
+    Vector<int> resultado = MatrizOperaciones::sumaFilas(matriz);
+    resultado.print();
+    return 0;
+}
