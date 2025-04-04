@@ -1,0 +1,85 @@
+#include <iostream>
+#include "matrix.h"
+using namespace std;
+
+template <int ROWS, int COLS>
+class MathMatrix : public Matrix<int, ROWS, COLS> {
+  public:
+    bool esSimetrica()
+    {
+        for (int i = 0; i < ROWS; i++)
+        {
+            for (int j = 0; j < COLS; j++)
+            {
+                if (this->at(i, j) != this->at(j, i))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    int maximo()
+    {
+        int maxVal = this->at(0, 0);
+        for (int i = 0; i < ROWS; i++)
+        {
+            for (int j = 0; j < COLS; j++)
+            {
+                if (this->at(i, j) > maxVal)
+                {
+                    maxVal = this->at(i, j);
+                }
+            }
+        }
+        return maxVal;
+    }
+
+    int minimo()
+    {
+        int minVal = this->at(0, 0);
+        for (int i = 0; i < ROWS; i++)
+        {
+            for (int j = 0; j < COLS; j++)
+            {
+                if (this->at(i, j) < minVal)
+                {
+                    minVal = this->at(i, j);
+                }
+            }
+        }
+        return minVal;
+    }
+
+    float promedio()
+    {
+        float suma = 0;
+        for (int i = 0; i < ROWS; i++)
+        {
+            for (int j = 0; j < COLS; j++)
+            {
+                suma += this->at(i, j);
+            }
+        }
+        return suma / (ROWS * COLS);
+    }
+};
+
+int main()
+{
+    MathMatrix<3, 3> matriz;
+    int valor;
+    for (int i = 0; i < matriz.numRows(); i++)
+    {
+        for (int j = 0; j < matriz.numCols(); j++)
+        {
+            cin >> valor;
+            matriz.set(i, j, valor);
+        }
+    }
+    cout << matriz.maximo() << endl;
+    cout << matriz.minimo() << endl;
+    cout << matriz.promedio() << endl;
+    return 0;
+}
