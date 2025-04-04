@@ -1,0 +1,92 @@
+#include <iostream>
+#include "vector.h"
+using namespace std;
+
+class Estudiante {
+  private:
+    int registro;
+    string nombre;
+    Vector<float> calificaciones;
+
+  public:
+    Estudiante() : registro(0), nombre("") {}
+    Estudiante(int _registro, string _nombre) : registro(_registro), nombre(_nombre) {}
+
+    void agregarCalificacion(float nota)
+    {
+        calificaciones.pushBack(nota);
+    }
+
+    float promedio()
+    {
+        float suma = 0;
+        for (int i = 0; i < calificaciones.getSize(); i++)
+        {
+            suma += calificaciones.at(i);
+        }
+        if (calificaciones.getSize() == 0) return 0;
+        return suma / calificaciones.getSize();
+    }
+
+    int getRegistro() { return registro; }
+    string getNombre() { return nombre; }
+
+    friend ostream &operator<<(ostream &out, const Estudiante &e)
+    {
+        out << e.registro << " | " << e.nombre;
+        return out;
+    }
+};
+
+class GestionAcademica {
+  private:
+    Vector<Estudiante> estudiantes;
+
+  public:
+    void agregarEstudiante(Estudiante e)
+    {
+        estudiantes.pushBack(e);
+    }
+
+    float promedioGeneral()
+    {
+        float suma = 0;
+        for (int i = 0; i < estudiantes.getSize(); i++)
+        {
+            suma += estudiantes.at(i).promedio();
+        }
+        if (estudiantes.getSize() == 0) return 0;
+        return suma / estudiantes.getSize();
+    }
+
+    void mostrarEstudiantes()
+    {
+        for (int i = 0; i < estudiantes.getSize(); i++)
+        {
+            cout << estudiantes.at(i) << " | Promedio: " << estudiantes.at(i).promedio() << endl;
+        }
+    }
+};
+
+int main()
+{
+    GestionAcademica gestion;
+    int n, registro, m;
+    string nombre;
+    float nota;
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> registro >> nombre >> m;
+        Estudiante e(registro, nombre);
+        for (int j = 0; j < m; j++)
+        {
+            cin >> nota;
+            e.agregarCalificacion(nota);
+        }
+        gestion.agregarEstudiante(e);
+    }
+    gestion.mostrarEstudiantes();
+    cout << gestion.promedioGeneral() << endl;
+    return 0;
+}
