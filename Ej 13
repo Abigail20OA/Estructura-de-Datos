@@ -1,0 +1,81 @@
+#include <iostream>
+#include "Matrix.h"
+using namespace std;
+
+class Producto {
+  private:
+    int id;
+    string nombre;
+    float precio;
+    int stock;
+
+  public:
+    Producto() : id(0), nombre(""), precio(0), stock(0) {}
+    Producto(int _id, string _nombre, float _precio, int _stock)
+        : id(_id), nombre(_nombre), precio(_precio), stock(_stock) {}
+
+    int getId() { return id; }
+    string getNombre() { return nombre; }
+    float getPrecio() { return precio; }
+    int getStock() { return stock; }
+
+    friend ostream &operator<<(ostream &out, const Producto &p)
+    {
+        out << p.id << " | " << p.nombre << " | " << p.precio << " | " << p.stock;
+        return out;
+    }
+};
+
+template <int ROWS, int COLS>
+class Almacen {
+  private:
+    Matrix<Producto, ROWS, COLS> matriz;
+
+  public:
+    void agregarProducto(int fila, int columna, Producto p)
+    {
+        matriz.set(fila, columna, p);
+    }
+
+    int totalCategoria(int fila)
+    {
+        int total = 0;
+        for (int j = 0; j < matriz.numCols(); j++)
+        {
+            total += matriz.at(fila, j).getStock();
+        }
+        return total;
+    }
+
+    void mostrarAlmacen()
+    {
+        for (int i = 0; i < matriz.numRows(); i++)
+        {
+            for (int j = 0; j < matriz.numCols(); j++)
+            {
+                cout << matriz.at(i, j) << endl;
+            }
+        }
+    }
+};
+
+int main()
+{
+    Almacen<2, 3> almacen;
+    int id, stock;
+    float precio;
+    string nombre;
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            cin >> id >> nombre >> precio >> stock;
+            Producto p(id, nombre, precio, stock);
+            almacen.agregarProducto(i, j, p);
+        }
+    }
+    almacen.mostrarAlmacen();
+    cout << almacen.totalCategoria(0) << endl;
+    cout << almacen.totalCategoria(1) << endl;
+    return 0;
+}
