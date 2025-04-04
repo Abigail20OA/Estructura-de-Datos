@@ -1,0 +1,75 @@
+#include <iostream>
+#include "matrix.h"
+using namespace std;
+
+template <int ROWS, int COLS>
+class MatrixCalculator {
+  public:
+    static Matrix<int, ROWS, COLS> suma(Matrix<int, ROWS, COLS> &a, Matrix<int, ROWS, COLS> &b)
+    {
+        Matrix<int, ROWS, COLS> resultado;
+        for (int i = 0; i < ROWS; i++)
+        {
+            for (int j = 0; j < COLS; j++)
+            {
+                resultado.set(i, j, a.at(i, j) + b.at(i, j));
+            }
+        }
+        return resultado;
+    }
+
+    static Matrix<int, ROWS, COLS> resta(Matrix<int, ROWS, COLS> &a, Matrix<int, ROWS, COLS> &b)
+    {
+        Matrix<int, ROWS, COLS> resultado;
+        for (int i = 0; i < ROWS; i++)
+        {
+            for (int j = 0; j < COLS; j++)
+            {
+                resultado.set(i, j, a.at(i, j) - b.at(i, j));
+            }
+        }
+        return resultado;
+    }
+
+    static Matrix<int, ROWS, COLS> multiplicacion(Matrix<int, ROWS, COLS> &a, Matrix<int, ROWS, COLS> &b)
+    {
+        Matrix<int, ROWS, COLS> resultado;
+        for (int i = 0; i < ROWS; i++)
+        {
+            for (int j = 0; j < COLS; j++)
+            {
+                resultado.set(i, j, a.at(i, j) * b.at(i, j));
+            }
+        }
+        return resultado;
+    }
+};
+
+int main()
+{
+    Matrix<int, 3, 3> m1, m2, sum, res, mul;
+    int valor;
+    for (int i = 0; i < m1.numRows(); i++)
+    {
+        for (int j = 0; j < m1.numCols(); j++)
+        {
+            cin >> valor;
+            m1.set(i, j, valor);
+        }
+    }
+    for (int i = 0; i < m2.numRows(); i++)
+    {
+        for (int j = 0; j < m2.numCols(); j++)
+        {
+            cin >> valor;
+            m2.set(i, j, valor);
+        }
+    }
+    sum = MatrixCalculator<3, 3>::suma(m1, m2);
+    res = MatrixCalculator<3, 3>::resta(m1, m2);
+    mul = MatrixCalculator<3, 3>::multiplicacion(m1, m2);
+    sum.print();
+    res.print();
+    mul.print();
+    return 0;
+}
